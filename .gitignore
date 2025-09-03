@@ -1,0 +1,91 @@
+# Arquivos de bytecode compilado
+*.class
+
+# Arquivos de log
+*.log
+*.svclog
+
+# Arquivos gerados por builds e empacotamento
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Diretórios de saída de build
+/target/
+/build/
+/out/
+/bin/
+
+# Arquivos temporários
+*.tmp
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de configuração de IDEs
+
+## IntelliJ IDEA ##
+.idea/
+*.iml
+*.iws
+
+## Eclipse ##
+.classpath
+.project
+.settings/
+.metadata/
+
+## NetBeans ##
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+.nb-gradle/
+build/
+
+## VS Code ##
+.vscode/
+
+# Arquivos de dependências (gerenciadas por Maven ou Gradle)
+# É uma boa prática não versionar as dependências diretamente,
+# mas sim os arquivos de configuração do gerenciador de dependências (pom.xml, build.gradle).
+# Descomente as linhas abaixo se você armazena as dependências localmente.
+# lib/
+# libs/
+
+# Arquivos de configuração específicos do ambiente
+# É recomendado não versionar arquivos com senhas ou configurações locais.
+# Em vez disso, utilize um arquivo de exemplo.
+local.properties
+application-local.properties
+application-local.yml
+
+# Relatórios de ferramentas de análise de código
+/coverage/
+/reports/
+
+# Arquivos do Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
+# Arquivos do Gradle
+.gradle/
+build/
+!build/wrapper/gradle-wrapper.jar
+
+# Arquivos do Maven Wrapper
+!/mvnw
+!/mvnw.cmd
+!/.mvn/wrapper/maven-wrapper.properties
+
+# Arquivos de VM do Java (em caso de crash)
+hs_err_pid*
+replay_pid*
