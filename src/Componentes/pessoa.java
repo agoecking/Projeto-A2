@@ -3,7 +3,6 @@ package Componentes;
 public abstract class pessoa {
 
     // --- ATRIBUTOS ---
-    private int id_pessoa;
     private String nome;
     private int telefone;
     private int rg;
@@ -12,8 +11,7 @@ public abstract class pessoa {
     private String email;
 
     // --- CONSTRUTOR ---
-    public pessoa(int id_pessoa, String nome, int telefone, int rg, int cpf, String genero, String email) {
-        this.id_pessoa = id_pessoa;
+    public pessoa(String nome, int telefone, int rg, int cpf, String genero, String email) {
         this.nome = nome;
         this.telefone = telefone;
         this.rg = rg;
@@ -21,15 +19,13 @@ public abstract class pessoa {
         this.genero = genero;
         this.email = email;
     }
+    
+    // --- 
 
-    // --- GETTERS E SETTERS ---
-    public int getId_pessoa() {
-        return id_pessoa;
-    }
+    public abstract void Listar();
+    	
 
-    public void setId_pessoa(int id_pessoa) {
-        this.id_pessoa = id_pessoa;
-    }
+	// --- GETTERS E SETTERS ---
 
     public String getNome() {
         return nome;
