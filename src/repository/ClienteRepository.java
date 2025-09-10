@@ -1,16 +1,16 @@
-package Repository;
+package repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Componentes.cliente;
+import componentes.Cliente;
 
-public class clienteRepository {
+public class ClienteRepository implements CrudRepository<Cliente>{
 	
-	private List<cliente> clientes = new ArrayList<>();
+	private List<Cliente> clientes = new ArrayList<>();
 	
-	public void Salvar(cliente _cliente) {
-		clientes.add(_cliente);
+	public void Salvar(Cliente cliente) {
+		clientes.add(cliente);
 		System.out.println("Cliente salvo");
 	}
 	
@@ -22,9 +22,10 @@ public class clienteRepository {
 		if (clientes.isEmpty()) {
 			System.out.println("Nenhum cliente cadastrado.");
 		} else {
-			System.out.println("--- Lista de Médicos ---");
-			for (cliente m : clientes) {
+			System.out.println("--- Lista de Clientes ---");
+			for (Cliente m : clientes) {
 				m.Listar();
+				
 				System.out.println("-------------------------");
 			}
 		}

@@ -1,6 +1,6 @@
-package Componentes;
+package componentes;
 
-public class endereco {
+public class Endereco {
 
     // --- ATRIBUTOS ---
     private int cep;
@@ -9,7 +9,7 @@ public class endereco {
     private String estado;
 
     // --- CONSTRUTOR ---
-    public endereco(int cep, String rua, String cidade, String estado) {
+    public Endereco(int cep, String rua, String cidade, String estado) {
         this.cep = cep;
         this.rua = rua;
         this.cidade = cidade;

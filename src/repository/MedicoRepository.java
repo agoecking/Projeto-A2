@@ -1,15 +1,15 @@
-package Repository;
+package repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Componentes.medico;
+import componentes.Medico;
 
-public class medicoRepository {
+public class MedicoRepository implements CrudRepository<Medico>{
 	
-	private List<medico> medicos = new ArrayList<>();
+	private List<Medico> medicos = new ArrayList<>();
 	
-	public void Salvar(medico _medico) {
+	public void Salvar(Medico _medico) {
 		medicos.add(_medico);
 		System.out.println("Médico salvo");
 	}
@@ -23,7 +23,7 @@ public class medicoRepository {
 			System.out.println("Nenhum médico cadastrado.");
 		} else {
 			System.out.println("--- Lista de Médicos ---");
-			for (medico m : medicos) {
+			for (Medico m : medicos) {
 				m.Listar();
 				System.out.println("-------------------------");
 			}

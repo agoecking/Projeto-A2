@@ -1,6 +1,6 @@
-package Componentes;
+package componentes;
 
-public abstract class pessoa {
+public abstract class Pessoa {
 
     // --- ATRIBUTOS ---
     private String nome;
@@ -11,7 +11,7 @@ public abstract class pessoa {
     private String email;
 
     // --- CONSTRUTOR ---
-    public pessoa(String nome, int telefone, int rg, int cpf, String genero, String email) {
+    public Pessoa(String nome, int telefone, int rg, int cpf, String genero, String email) {
         this.nome = nome;
         this.telefone = telefone;
         this.rg = rg;

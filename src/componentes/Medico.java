@@ -1,11 +1,11 @@
-package Componentes;
+package componentes;
 
-public class medico extends pessoa {
+public class Medico extends Pessoa {
 	
 	private String crm;
 
 
-	public medico(String nome, int telefone, int rg, int cpf, String genero, String email, String crm) {
+	public Medico(String nome, int telefone, int rg, int cpf, String genero, String email, String crm) {
 		super(nome, telefone, rg, cpf, genero, email);
 		this.crm = crm;
 	}
