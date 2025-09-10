@@ -23,8 +23,8 @@ public class ClienteRepository implements CrudRepository<Cliente>{
 			System.out.println("Nenhum cliente cadastrado.");
 		} else {
 			System.out.println("--- Lista de Clientes ---");
-			for (Cliente m : clientes) {
-				m.Listar();
+			for (Cliente c : clientes) {
+				c.Listar();
 				
 				System.out.println("-------------------------");
 			}
