@@ -19,3 +19,5 @@ Próximos passos incluem:
 - Função de cadastro de horário vago;
 - Função de agendamento baseado em especialidade e horário vago por médico;
 - Verificação de agendamento e horários disponíveis;
+
+Diagrama: https://app.diagrams.net/#G1xWk86aoFnFHR_mWdToxIkctkAL8Utgym#%7B%22pageId%22%3A%22Esip6vwrr6jEOZYmGrqr%22%7D
