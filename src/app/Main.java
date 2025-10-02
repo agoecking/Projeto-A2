@@ -1,6 +1,8 @@
 package app;
 
 import componentes.Medico;
+import componentes.Especialidade;
+import componentes.Disponibilidade;
 import repository.MedicoRepository;
 import componentes.Endereco;
 import repository.ClienteRepository;
@@ -37,30 +39,56 @@ public class Main {
                 case 1:
                     // CADASTRO DE MÉDICO
                     System.out.println("\n--- SALVAR NOVO MÉDICO ---");
-                    
+
                     try {
                         System.out.print("Nome: ");
                         String nome = scanner.nextLine();
-                        
+
                         System.out.print("Telefone: ");
                         int telefone = Integer.parseInt(scanner.nextLine());
-                        
+
                         System.out.print("RG: ");
                         int rg = Integer.parseInt(scanner.nextLine());
-                        
+
                         System.out.print("CPF: ");
                         int cpf = Integer.parseInt(scanner.nextLine());
-                        
+
                         System.out.print("Gênero: ");
                         String genero = scanner.nextLine();
-                        
+
                         System.out.print("Email: ");
                         String email = scanner.nextLine();
-                        
+
                         System.out.print("CRM: ");
                         String crm = scanner.nextLine();
-                        
+
+                        // cria o médico
                         Medico novoMedico = new Medico(nome, telefone, rg, cpf, genero, email, crm);
+
+                        // pergunta especialidades
+                        System.out.print("Quantas especialidades este médico possui? ");
+                        int qtdEsp = Integer.parseInt(scanner.nextLine());
+
+                        for (int i = 0; i < qtdEsp; i++) {
+                            System.out.print("Digite o nome da especialidade " + (i + 1) + ": ");
+                            String nomeEsp = scanner.nextLine();
+                            novoMedico.adicionarEspecialidade(new Especialidade(nomeEsp));
+                        }
+
+                        // pergunta disponibilidades
+                        System.out.print("Quantas disponibilidades este médico possui? ");
+                        int qtdDisp = Integer.parseInt(scanner.nextLine());
+
+                        for (int i = 0; i < qtdDisp; i++) {
+                            System.out.print("Dia da semana da disponibilidade " + (i + 1) + ": ");
+                            String dia = scanner.nextLine();
+
+                            System.out.print("Hora (exemplo 14:00): ");
+                            String hora = scanner.nextLine();
+
+                            novoMedico.adicionarDisponibilidade(new Disponibilidade(dia, hora));
+                        }
+
                         medicoRepo.Salvar(novoMedico);
                         System.out.println("Médico cadastrado com sucesso!");
 
@@ -72,10 +100,9 @@ public class Main {
                 case 2:
                     // LISTAGEM DE MÉDICOS
                     System.out.println("\n--- LISTAR TODOS OS MÉDICOS ---");
-                    
                     medicoRepo.Listar();
                     break;
-                    
+
                 case 3:
                     // CADASTRO DE CLIENTE
                     System.out.println("\n--- SALVAR NOVO CLIENTE ---");
@@ -83,36 +110,36 @@ public class Main {
                     try {
                         System.out.print("Nome: ");
                         String nomeCliente = scanner.nextLine();
-                        
+
                         System.out.print("Telefone: ");
                         int telefoneCliente = Integer.parseInt(scanner.nextLine());
-                        
+
                         System.out.print("RG: ");
                         int rgCliente = Integer.parseInt(scanner.nextLine());
-                        
+
                         System.out.print("CPF: ");
                         int cpfCliente = Integer.parseInt(scanner.nextLine());
-                        
+
                         System.out.print("Gênero: ");
                         String generoCliente = scanner.nextLine();
-                        
+
                         System.out.print("Email: ");
                         String emailCliente = scanner.nextLine();
-                        
+
                         // endereço
                         System.out.println("\n--- ENDEREÇO DO CLIENTE ---");
                         System.out.print("CEP: ");
                         int cep = Integer.parseInt(scanner.nextLine());
-                        
+
                         System.out.print("Rua: ");
                         String rua = scanner.nextLine();
-                        
+
                         System.out.print("Cidade: ");
                         String cidade = scanner.nextLine();
-                        
+
                         System.out.print("Estado: ");
                         String estado = scanner.nextLine();
-                        
+
                         Endereco endereco = new Endereco(cep, rua, cidade, estado);
                         Cliente novoCliente = new Cliente(nomeCliente, telefoneCliente, rgCliente, cpfCliente, generoCliente, emailCliente, endereco);
 
