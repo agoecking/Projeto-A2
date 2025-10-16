@@ -16,8 +16,9 @@ Próximos passos incluem:
 
 - implementação de salvar, deletar e ler dados em texto local;
 - Função de cadastro de especialidade; - Ok 
-- Função de cadastro de horário vago;
+- Função de cadastro de horário vago; - OK 
 - Função de agendamento baseado em especialidade e horário vago por médico;
-- Verificação de agendamento e horários disponíveis;
+- Verificação de agendamento e horários disponíveis; - OK
 
 Diagrama: https://app.diagrams.net/#G1xWk86aoFnFHR_mWdToxIkctkAL8Utgym#%7B%22pageId%22%3A%22Esip6vwrr6jEOZYmGrqr%22%7D
+

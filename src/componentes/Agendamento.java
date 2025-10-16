@@ -5,17 +5,18 @@ public class Agendamento {
     private String nomeCliente;
     private String nomeMedico;
     private String data;  
-    private String status; 
+    private StatusAgendamento status; // Usando o enum
 
-    public Agendamento(int id, String nomeCliente, String nomeMedico, String data) {
+    // Construtor principal
+    public Agendamento(int id, String nomeCliente, String nomeMedico, String data, StatusAgendamento status) {
         this.id = id;
         this.nomeCliente = nomeCliente;
         this.nomeMedico = nomeMedico;
         this.data = data;
-        this.status = "MARCADO";
+        this.status = status;
     }
 
-    // Getters e Setters
+    // --- GETTERS (para ler os dados) ---
     public int getId() {
         return id;
     }
@@ -32,39 +33,48 @@ public class Agendamento {
         return data;
     }
 
-    public String getStatus() {
+    public StatusAgendamento getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    // --- SETTERS (para modificar os dados) ---
+    
+    // MÉTODO QUE FALTAVA
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
+    }
+    
+    // MÉTODO ATUALIZADO PARA ACEITAR O ENUM
+    public void setStatus(StatusAgendamento status) {
         this.status = status;
     }
-
-    /**
-     * Converte o objeto em uma linha de texto para salvar no TXT.
-     * Formato: id;cliente;medico;data;status
-     */
-    @Override
-    public String toString() {
-        return id + ";" + nomeCliente + ";" + nomeMedico + ";" + data + ";" + status;
+    
+    // Setter para o ID, útil para o repositório
+    public void setId(int id) {
+        this.id = id;
     }
 
-    /**
-     * Cria um objeto Agendamento a partir de uma linha do TXT.
-     */
+
+    @Override
+    public String toString() {
+        // Usa .name() para converter o enum para String antes de salvar
+        return id + ";" + nomeCliente + ";" + nomeMedico + ";" + data + ";" + status.name();
+    }
+
     public static Agendamento fromString(String linha) {
         String[] partes = linha.split(";");
         if (partes.length < 5) {
             throw new IllegalArgumentException("Linha inválida: " + linha);
         }
-
-        Agendamento agendamento = new Agendamento(
+        // Converte a String do arquivo de volta para o enum
+        StatusAgendamento status = StatusAgendamento.valueOf(partes[4].toUpperCase());
+        
+        return new Agendamento(
                 Integer.parseInt(partes[0]),
                 partes[1],
                 partes[2],
-                partes[3]
+                partes[3],
+                status
         );
-        agendamento.setStatus(partes[4]);
-        return agendamento;
     }
 }

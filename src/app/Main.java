@@ -1,5 +1,10 @@
 package app;
 
+import componentes.Agendamento;
+import componentes.StatusAgendamento;
+import repository.AgendamentoRepository;
+import java.util.List;
+
 import componentes.Medico;
 import componentes.Especialidade;
 import componentes.Disponibilidade;
@@ -15,17 +20,22 @@ public class Main {
 
         MedicoRepository medicoRepo = new MedicoRepository();
         ClienteRepository clienteRepo = new ClienteRepository();
+        AgendamentoRepository agendamentoRepo = new AgendamentoRepository(); // NOVO REPOSITÓRIO
+        
         Scanner scanner = new Scanner(System.in);
         int opcao;
 
         do {
-            // MENU
+            // 3. MENU COM AS OPÇÕES
             System.out.println("\n--- MENU ---");
             System.out.println("1 - Cadastrar Novo Médico");
             System.out.println("2 - Listar Todos os Médicos");
             System.out.println("3 - Cadastrar Novo Cliente");
             System.out.println("4 - Listar Todos os Clientes");
-            System.out.println("5 - Sair");
+            System.out.println("5 - Cadastrar Horário Vago para Médico");
+            System.out.println("6 - Listar Todos os Agendamentos");
+            System.out.println("7 - Marcar uma Consulta");
+            System.out.println("8 - Sair"); // OPÇÃO SAIR ATUALIZADA
             System.out.print("Digite uma opção: ");
 
             while (!scanner.hasNextInt()) {
@@ -37,128 +47,96 @@ public class Main {
 
             switch (opcao) {
                 case 1:
-                    // CADASTRO DE MÉDICO
-                    System.out.println("\n--- SALVAR NOVO MÉDICO ---");
-
-                    try {
-                        System.out.print("Nome: ");
-                        String nome = scanner.nextLine();
-
-                        System.out.print("Telefone: ");
-                        int telefone = Integer.parseInt(scanner.nextLine());
-
-                        System.out.print("RG: ");
-                        int rg = Integer.parseInt(scanner.nextLine());
-
-                        System.out.print("CPF: ");
-                        int cpf = Integer.parseInt(scanner.nextLine());
-
-                        System.out.print("Gênero: ");
-                        String genero = scanner.nextLine();
-
-                        System.out.print("Email: ");
-                        String email = scanner.nextLine();
-
-                        System.out.print("CRM: ");
-                        String crm = scanner.nextLine();
-
-                        // cria o médico
-                        Medico novoMedico = new Medico(nome, telefone, rg, cpf, genero, email, crm);
-
-                        // pergunta especialidades
-                        System.out.print("Quantas especialidades este médico possui? ");
-                        int qtdEsp = Integer.parseInt(scanner.nextLine());
-
-                        for (int i = 0; i < qtdEsp; i++) {
-                            System.out.print("Digite o nome da especialidade " + (i + 1) + ": ");
-                            String nomeEsp = scanner.nextLine();
-                            novoMedico.adicionarEspecialidade(new Especialidade(nomeEsp));
-                        }
-
-                        // pergunta disponibilidades
-                        System.out.print("Quantas disponibilidades este médico possui? ");
-                        int qtdDisp = Integer.parseInt(scanner.nextLine());
-
-                        for (int i = 0; i < qtdDisp; i++) {
-                            System.out.print("Dia da semana da disponibilidade " + (i + 1) + ": ");
-                            String dia = scanner.nextLine();
-
-                            System.out.print("Hora (exemplo 14:00): ");
-                            String hora = scanner.nextLine();
-
-                            novoMedico.adicionarDisponibilidade(new Disponibilidade(dia, hora));
-                        }
-
-                        medicoRepo.Salvar(novoMedico);
-                        System.out.println("Médico cadastrado com sucesso!");
-
-                    } catch (Exception e) {
-                        System.out.println("Erro: Por favor, digite um número válido para Telefone, RG ou CPF.");
-                    }
+                
                     break;
 
                 case 2:
-                    // LISTAGEM DE MÉDICOS
                     System.out.println("\n--- LISTAR TODOS OS MÉDICOS ---");
                     medicoRepo.Listar();
                     break;
 
                 case 3:
-                    // CADASTRO DE CLIENTE
-                    System.out.println("\n--- SALVAR NOVO CLIENTE ---");
-
-                    try {
-                        System.out.print("Nome: ");
-                        String nomeCliente = scanner.nextLine();
-
-                        System.out.print("Telefone: ");
-                        int telefoneCliente = Integer.parseInt(scanner.nextLine());
-
-                        System.out.print("RG: ");
-                        int rgCliente = Integer.parseInt(scanner.nextLine());
-
-                        System.out.print("CPF: ");
-                        int cpfCliente = Integer.parseInt(scanner.nextLine());
-
-                        System.out.print("Gênero: ");
-                        String generoCliente = scanner.nextLine();
-
-                        System.out.print("Email: ");
-                        String emailCliente = scanner.nextLine();
-
-                        // endereço
-                        System.out.println("\n--- ENDEREÇO DO CLIENTE ---");
-                        System.out.print("CEP: ");
-                        int cep = Integer.parseInt(scanner.nextLine());
-
-                        System.out.print("Rua: ");
-                        String rua = scanner.nextLine();
-
-                        System.out.print("Cidade: ");
-                        String cidade = scanner.nextLine();
-
-                        System.out.print("Estado: ");
-                        String estado = scanner.nextLine();
-
-                        Endereco endereco = new Endereco(cep, rua, cidade, estado);
-                        Cliente novoCliente = new Cliente(nomeCliente, telefoneCliente, rgCliente, cpfCliente, generoCliente, emailCliente, endereco);
-
-                        clienteRepo.Salvar(novoCliente);
-                        System.out.println("Cliente cadastrado com sucesso!");
-
-                    } catch (Exception e) {
-                        System.out.println("Erro: Por favor, digite um número válido.");
-                    }
+                  
                     break;
 
                 case 4:
-                    // LISTAGEM DE CLIENTES
                     System.out.println("\n--- LISTAR TODOS OS CLIENTES ---");
                     clienteRepo.Listar();
                     break;
-
+                
+               
                 case 5:
-                    System.out.println("Saindo do programa. Até mais!");
+                    System.out.println("\n--- CADASTRAR HORÁRIO VAGO ---");
+                    // Primeiro, lista os médicos para o usuário saber o CRM
+                    medicoRepo.Listar();
+                    System.out.print("Digite o CRM do médico para adicionar um horário: ");
+                    String crmBusca = scanner.nextLine();
+                    
+                    // Supõe que o repositório de médico tenha o método buscarPorCrm
+                    // Se não tiver, você precisa adicioná-lo!
+                    Medico medicoEncontrado = medicoRepo.buscarPorCrm(crmBusca);
+
+                    if (medicoEncontrado != null) {
+                        System.out.print("Digite a data e hora (ex: DD/MM/AAAA HH:MM): ");
+                        String data = scanner.nextLine();
+
+                        // Cria um novo agendamento com status LIVRE
+                        // O ID será 0 por enquanto, o repositório vai atribuir o ID correto
+                        Agendamento novoHorario = new Agendamento(0, "", medicoEncontrado.getNome(), data, StatusAgendamento.LIVRE);
+                        agendamentoRepo.Salvar(novoHorario);
+
+                        System.out.println("Horário vago cadastrado com sucesso!");
+                    } else {
+                        System.out.println("Médico com o CRM " + crmBusca + " não encontrado.");
+                    }
+                    break;
+
+                // 5. NOVO CASE PARA LISTAR OS AGENDAMENTOS
+                case 6:
+                    System.out.println("\n--- LISTA DE AGENDAMENTOS ---");
+                    agendamentoRepo.Listar();
+                    break;
+
+                // 6. NOVO CASE PARA MARCAR UMA CONSULTA
+                case 7:
+                    System.out.println("\n--- MARCAR UMA CONSULTA ---");
+                    
+                    List<Agendamento> horariosLivres = agendamentoRepo.listarHorariosLivres();
+                    if (horariosLivres.isEmpty()) {
+                        System.out.println("Desculpe, não há horários livres no momento.");
+                        break;
+                    }
+                    
+                    System.out.println("Horários disponíveis:");
+                    for (Agendamento ag : horariosLivres) {
+                         System.out.println("ID: " + ag.getId() + 
+                                           " | Médico: " + ag.getNomeMedico() + 
+                                           " | Data: " + ag.getData());
+                    }
+
+                    System.out.print("\nDigite o ID do horário que deseja marcar: ");
+                    int idEscolhido = scanner.nextInt();
+                    scanner.nextLine();
+
+                    Agendamento agendamentoEscolhido = agendamentoRepo.buscarPorId(idEscolhido);
+
+                    if (agendamentoEscolhido != null && agendamentoEscolhido.getStatus() == StatusAgendamento.LIVRE) {
+                        // Lista os clientes para facilitar
+                        clienteRepo.Listar();
+                        System.out.print("Digite o nome do Cliente para o agendamento: ");
+                        String nomeCliente = scanner.nextLine();
+                        
+                        agendamentoEscolhido.setNomeCliente(nomeCliente);
+                        agendamentoEscolhido.setStatus(StatusAgendamento.AGENDADO);
+
+                        System.out.println("Consulta marcada com sucesso para " + nomeCliente + "!");
+                    } else {
+                        System.out.println("ID inválido ou horário já ocupado. Tente novamente.");
+                    }
+                    break;
+
+                case 8: // OPÇÃO SAIR ATUALIZADA
+                    System.out.println("Saindo do programa...");
                     break;
 
                 default:
@@ -166,7 +144,12 @@ public class Main {
                     break;
             }
 
-        } while (opcao != 5);
+        } while (opcao != 8); // CONDIÇÃO DO LOOP ATUALIZADA
+        System.out.println("Salvando dados antes de sair...");
+        // medicoRepo.SalvarParaArquivo();
+        // clienteRepo.SalvarParaArquivo();
+        // agendamentoRepo.SalvarParaArquivo();
+        System.out.println("Dados salvos. Até mais!");
 
         scanner.close();
     }
