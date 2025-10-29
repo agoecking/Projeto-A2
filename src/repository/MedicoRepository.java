@@ -8,7 +8,8 @@ import componentes.Medico;
 public class MedicoRepository implements CrudRepository<Medico>{
 	
 	private List<Medico> medicos = new ArrayList<>();
-	
+    private static final String ARQUIVO_MEDICOS = "agendamentos.txt";
+
 	public void Salvar(Medico _medico) {
 		medicos.add(_medico);
 		System.out.println("Médico salvo");
@@ -28,5 +29,10 @@ public class MedicoRepository implements CrudRepository<Medico>{
 				System.out.println("-------------------------");
 			}
 		}
+	}
+
+	public Medico buscarPorCrm(String crmBusca) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

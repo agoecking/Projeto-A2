@@ -2,13 +2,11 @@ package componentes;
 
 public class Endereco {
 
-    // --- ATRIBUTOS ---
     private int cep;
     private String rua;
     private String cidade;
     private String estado;
 
-    // --- CONSTRUTOR ---
     public Endereco(int cep, String rua, String cidade, String estado) {
         this.cep = cep;
         this.rua = rua;
@@ -16,36 +14,15 @@ public class Endereco {
         this.estado = estado;
     }
 
-    // --- GETTERS E SETTERS ---
-    public int getCep() {
-        return cep;
-    }
+    public int getCep() { return cep; }
+    public void setCep(int cep) { this.cep = cep; }
 
-    public void setCep(int cep) {
-        this.cep = cep;
-    }
+    public String getRua() { return rua; }
+    public void setRua(String rua) { this.rua = rua; }
 
-    public String getRua() {
-        return rua;
-    }
+    public String getCidade() { return cidade; }
+    public void setCidade(String cidade) { this.cidade = cidade; }
 
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 }

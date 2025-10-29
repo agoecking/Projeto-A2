@@ -56,7 +56,49 @@ public class Main {
                     break;
 
                 case 3:
-                  
+                	System.out.println("\n--- CADASTRAR CLIENTE ---");
+
+                    System.out.print("Nome: ");
+                    String nome = scanner.nextLine();
+
+                    System.out.print("Telefone: ");
+                    int telefone = Integer.parseInt(scanner.nextLine());
+
+                    System.out.print("RG: ");
+                    int rg = Integer.parseInt(scanner.nextLine());
+
+                    System.out.print("CPF: ");
+                    int cpf = Integer.parseInt(scanner.nextLine());
+
+                    System.out.print("Gênero: ");
+                    String genero = scanner.nextLine();
+
+                    System.out.print("Email: ");
+                    String email = scanner.nextLine();
+
+                    // Dados do endereço
+                    System.out.print("Rua: ");
+                    String rua = scanner.nextLine();
+
+                    System.out.print("Cidade: ");
+                    String cidade = scanner.nextLine();
+
+                    System.out.print("Estado: ");
+                    String estado = scanner.nextLine();
+
+                    System.out.print("CEP: ");
+                    int cep = Integer.parseInt(scanner.nextLine());
+
+                    // Cria objeto Endereco
+                    Endereco endereco = new Endereco(cep, rua, cidade, estado);
+
+                    // Cria objeto Cliente
+                    Cliente novoCliente = new Cliente(nome, telefone, rg, cpf, genero, email, endereco);
+
+                    // Salva usando o repositório
+                    clienteRepo.Salvar(novoCliente);
+
+                    System.out.println("Cliente cadastrado com sucesso!");
                     break;
 
                 case 4:
@@ -67,7 +109,6 @@ public class Main {
                
                 case 5:
                     System.out.println("\n--- CADASTRAR HORÁRIO VAGO ---");
-                    // Primeiro, lista os médicos para o usuário saber o CRM
                     medicoRepo.Listar();
                     System.out.print("Digite o CRM do médico para adicionar um horário: ");
                     String crmBusca = scanner.nextLine();

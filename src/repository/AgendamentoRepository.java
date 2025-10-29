@@ -2,62 +2,68 @@ package repository;
 
 import componentes.Agendamento;
 import componentes.StatusAgendamento;
-import java.util.ArrayList;
+import database.GerenciamentoDatabase;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
-// Lembre-se de implementar a interface, como você já faz nos outros repositórios
 public class AgendamentoRepository implements CrudRepository<Agendamento> {
 
-    private List<Agendamento> agendamentos = new ArrayList<>();
-    private int proximoId = 1;
+    private List<Agendamento> agendamentos;
+    private static final String ARQUIVO_AGENDAMENTOS = "agendamentos.txt";
+
+    public AgendamentoRepository() {
+        agendamentos = carregarDoArquivo();
+    }
 
     @Override
     public void Salvar(Agendamento agendamento) {
-        agendamento.setId(proximoId++);
         agendamentos.add(agendamento);
+        List<String> linhas = agendamentos.stream()
+                                          .map(Agendamento::toString)
+                                          .collect(Collectors.toList());
+        GerenciamentoDatabase.salvarLista(ARQUIVO_AGENDAMENTOS, linhas);
     }
-    
+
     @Override
     public void Listar() {
-        if (agendamentos.isEmpty()) {
+        List<Agendamento> ags = carregarDoArquivo(); // carrega do arquivo sempre
+        if (ags.isEmpty()) {
             System.out.println("Nenhum agendamento cadastrado.");
         } else {
-            for (Agendamento ag : agendamentos) {
-                System.out.println("ID: " + ag.getId() + 
-                                   " | Médico: " + ag.getNomeMedico() + 
-                                   " | Cliente: " + (ag.getNomeCliente().isEmpty() ? "----" : ag.getNomeCliente()) + 
-                                   " | Data: " + ag.getData() + 
-                                   " | Status: " + ag.getStatus());
+            for (Agendamento ag : ags) {
+                System.out.println(ag);
             }
         }
     }
+
+    @Override
+    public void Deletar(String nome) {
+        agendamentos.removeIf(ag -> ag.getNomeCliente().equalsIgnoreCase(nome));
+    }
+
+    private List<Agendamento> carregarDoArquivo() {
+        List<String> linhas = GerenciamentoDatabase.carregar(ARQUIVO_AGENDAMENTOS);
+        return linhas.stream().map(linha -> {
+            try {
+                return Agendamento.fromString(linha);
+            } catch (Exception e) {
+                System.err.println("Erro ao carregar agendamento do arquivo: " + e.getMessage());
+                return null;
+            }
+        }).filter(ag -> ag != null).collect(Collectors.toList());
+    }
     
     public List<Agendamento> listarHorariosLivres() {
-        return agendamentos.stream()
+        return carregarDoArquivo().stream()
                 .filter(ag -> ag.getStatus() == StatusAgendamento.LIVRE)
                 .collect(Collectors.toList());
     }
 
-    // ==================================================================
-    // MÉTODO QUE ESTÁ FALTANDO - ADICIONE ESTE BLOCO
-    /**
-     * Busca um agendamento na lista pelo seu ID.
-     * @param id O ID do agendamento a ser encontrado.
-     * @return O objeto Agendamento se encontrado, ou null se não existir.
-     */
     public Agendamento buscarPorId(int id) {
-        for (Agendamento ag : agendamentos) {
-            if (ag.getId() == id) {
-                return ag; // Retorna o agendamento quando encontra o ID correspondente
-            }
-        }
-        return null; // Retorna nulo se o loop terminar e não encontrar
-    }
-    // ==================================================================
-
-    @Override
-    public void Deletar(String nome) {
-        // Futuramente, você pode implementar a lógica para deletar um agendamento
+        return carregarDoArquivo().stream()
+                .filter(ag -> ag.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 }
