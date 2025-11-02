@@ -4,14 +4,14 @@ public abstract class Pessoa {
 
     // --- ATRIBUTOS ---
     private String nome;
-    private int telefone;
-    private int rg;
-    private int cpf;
+    private String telefone;
+    private String rg;
+    private String cpf;
     private String genero;
     private String email;
 
     // --- CONSTRUTOR ---
-    public Pessoa(String nome, int telefone, int rg, int cpf, String genero, String email) {
+    public Pessoa(String nome, String telefone, String rg, String cpf, String genero, String email) {
         this.nome = nome;
         this.telefone = telefone;
         this.rg = rg;
@@ -19,14 +19,11 @@ public abstract class Pessoa {
         this.genero = genero;
         this.email = email;
     }
-    
-    // --- 
 
+    // --- MÉTODO ABSTRATO ---
     public abstract void Listar();
-    	
 
-	// --- GETTERS E SETTERS ---
-
+    // --- GETTERS E SETTERS ---
     public String getNome() {
         return nome;
     }
@@ -35,27 +32,27 @@ public abstract class Pessoa {
         this.nome = nome;
     }
 
-    public int getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(int telefone) {
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 
-    public int getRg() {
+    public String getRg() {
         return rg;
     }
 
-    public void setRg(int rg) {
+    public void setRg(String rg) {
         this.rg = rg;
     }
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 

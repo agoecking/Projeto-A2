@@ -9,13 +9,18 @@ public class Medico extends Pessoa {
     private List<Especialidade> especialidades = new ArrayList<>();
     private List<Disponibilidade> disponibilidades = new ArrayList<>();
 
-    public Medico(String nome, int telefone, int rg, int cpf, String genero, String email, String crm) {
+    public Medico(String nome, String telefone, String rg, String cpf, String genero, String email, String crm) {
         super(nome, telefone, rg, cpf, genero, email);
         this.crm = crm;
     }
 
-    public String getCrm() { return crm; }
-    public void setCrm(String crm) { this.crm = crm; }
+    public String getCrm() { 
+        return crm; 
+    }
+
+    public void setCrm(String crm) { 
+        this.crm = crm; 
+    }
 
     // --- Especialidades ---
     public void adicionarEspecialidade(Especialidade esp) {
@@ -38,29 +43,38 @@ public class Medico extends Pessoa {
     // --- Listagem ---
     @Override
     public void Listar() {
-        System.out.println("Nome: " + this.getNome());
-        System.out.println("Telefone: " + this.getTelefone());
-        System.out.println("CRM: " + this.crm);
+        System.out.println("Nome: " + getNome());
+        System.out.println("Telefone: " + getTelefone());
+        System.out.println("RG: " + getRg());
+        System.out.println("CPF: " + getCpf());
+        System.out.println("Gênero: " + getGenero());
+        System.out.println("Email: " + getEmail());
+        System.out.println("CRM: " + crm);
+    }
 
-        // Especialidades
-        if (especialidades.isEmpty()) {
-            System.out.println("Especialidades: nenhuma cadastrada");
-        } else {
-            System.out.print("Especialidades: ");
-            for (Especialidade e : especialidades) {
-                System.out.print(e.getNome() + " ");
-            }
-            System.out.println();
+    // --- toString() e fromString() ---
+    @Override
+    public String toString() {
+        // Padrão idêntico ao Cliente: campos separados por ";"
+        return getNome() + ";" + getTelefone() + ";" + getRg() + ";" + getCpf() + ";" +
+               getGenero() + ";" + getEmail() + ";" + crm;
+    }
+
+    public static Medico fromString(String linha) {
+        String[] parts = linha.split(";");
+        if (parts.length < 7) {
+            throw new IllegalArgumentException("Linha de médico inválida: " + linha);
         }
 
-        // Disponibilidades
-        if (disponibilidades.isEmpty()) {
-            System.out.println("Disponibilidades: nenhuma cadastrada");
-        } else {
-            System.out.println("Disponibilidades:");
-            for (Disponibilidade d : disponibilidades) {
-                System.out.println("  - " + d);
-            }
-        }
+        // parts: 0=nome, 1=telefone, 2=rg, 3=cpf, 4=genero, 5=email, 6=crm
+        return new Medico(
+            parts[0], // nome
+            parts[1], // telefone
+            parts[2], // rg
+            parts[3], // cpf
+            parts[4], // genero
+            parts[5], // email
+            parts[6]  // crm
+        );
     }
 }

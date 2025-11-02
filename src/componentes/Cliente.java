@@ -4,7 +4,7 @@ public class Cliente extends Pessoa {
 
     private Endereco _endereco;
 
-    public Cliente(String nome, int telefone, int rg, int cpf, String genero, String email, Endereco _endereco) {
+    public Cliente(String nome, String telefone, String rg, String cpf, String genero, String email, Endereco _endereco) {
         super(nome, telefone, rg, cpf, genero, email);
         this._endereco = _endereco;
     }
@@ -23,8 +23,13 @@ public class Cliente extends Pessoa {
         }
     }
 
-    public Endereco get_endereco() { return _endereco; }
-    public void set_endereco(Endereco _endereco) { this._endereco = _endereco; }
+    public Endereco get_endereco() { 
+        return _endereco; 
+    }
+
+    public void set_endereco(Endereco _endereco) { 
+        this._endereco = _endereco; 
+    }
 
     @Override
     public String toString() {
@@ -52,13 +57,14 @@ public class Cliente extends Pessoa {
             endereco = new Endereco(cep, rua, cidade, estado);
         }
 
+        
         return new Cliente(
-            parts[0],
-            Integer.parseInt(parts[1]),
-            Integer.parseInt(parts[2]),
-            Integer.parseInt(parts[3]),
-            parts[4],
-            parts[5],
+            parts[0],   // nome
+            parts[1],   // telefone
+            parts[2],   // rg
+            parts[3],   // cpf
+            parts[4],   // genero
+            parts[5],   // email
             endereco
         );
     }
