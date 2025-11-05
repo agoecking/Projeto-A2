@@ -4,12 +4,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Classe responsável por salvar e carregar dados em arquivos TXT.
- */
+import logs.LogService;
+
+//classe responsável pelo gerenciamento dos arquivos txt, será chamada pelos repositórios
 public class GerenciamentoDatabase {
 
-    // 🔹 Caminhos fixos dos arquivos
     private static final String CAMINHO_BASE = "src/database/";
 
     public static void salvar(String arquivo, String linha) {
@@ -18,6 +17,7 @@ public class GerenciamentoDatabase {
             writer.newLine();
         } catch (IOException e) {
             System.out.println("Erro ao salvar no arquivo: " + e.getMessage());
+            LogService.registrar("mensagem");
         }
     }
 
@@ -30,6 +30,7 @@ public class GerenciamentoDatabase {
             }
         } catch (IOException e) {
             System.out.println("Erro ao ler o arquivo: " + e.getMessage());
+            LogService.registrar("mensagem");
         }
         return linhas;
     }
@@ -42,6 +43,7 @@ public class GerenciamentoDatabase {
             }
         } catch (IOException e) {
             System.out.println("Erro ao salvar lista no arquivo: " + e.getMessage());
+            LogService.registrar("mensagem");
         }
     }
 }

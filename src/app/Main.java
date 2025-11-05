@@ -125,7 +125,7 @@ public class Main {
                     clienteRepo.Listar();
                     break;
 
-                // ✅ CADASTRAR HORÁRIO LIVRE
+                // CADASTRAR HORÁRIO LIVRE
                 case 5:
                     System.out.println("\n--- CADASTRAR HORÁRIO VAGO ---");
                     medicoRepo.Listar();
@@ -149,13 +149,13 @@ public class Main {
                     }
                     break;
 
-                // ✅ LISTAR AGENDAMENTOS CONFIRMADOS
+                // LISTAR AGENDAMENTOS CONFIRMADOS
                 case 6:
                     System.out.println("\n--- LISTA DE AGENDAMENTOS ---");
                     agendamentoRepo.Listar();
                     break;
 
-                // ✅ MARCAR CONSULTA
+                // MARCAR CONSULTA
                 case 7:
                     System.out.println("\n--- MARCAR UMA CONSULTA ---");
 
@@ -204,9 +204,9 @@ public class Main {
 
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
+                    
                     break;
             }
-
         } while (opcao != 8);
 
         System.out.println("Salvando dados antes de sair...");

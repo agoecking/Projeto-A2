@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import componentes.Medico;
 import database.GerenciamentoDatabase;
+import logs.LogService;
 
 public class MedicoRepository implements CrudRepository<Medico> {
 
@@ -16,6 +17,7 @@ public class MedicoRepository implements CrudRepository<Medico> {
         medicos = carregarDoArquivo();
     }
 
+    //Método que chama a classe responsável por gerenciar os arquivos txt
     @Override
     public void Salvar(Medico medico) {
         medicos.add(medico);
@@ -40,6 +42,7 @@ public class MedicoRepository implements CrudRepository<Medico> {
         GerenciamentoDatabase.salvarLista(ARQUIVO_MEDICOS, linhas);
     }
 
+    
     @Override
     public void Listar() {
         List<Medico> meds = carregarDoArquivo();
@@ -64,6 +67,8 @@ public class MedicoRepository implements CrudRepository<Medico> {
         return null;
     }
 
+    //responsável por carregar os dados do txt, com base no gerenciamento de database
+
     private List<Medico> carregarDoArquivo() {
         List<String> linhas = GerenciamentoDatabase.carregar(ARQUIVO_MEDICOS);
         if (linhas == null) return new ArrayList<>();
@@ -73,6 +78,7 @@ public class MedicoRepository implements CrudRepository<Medico> {
                              return Medico.fromString(linha);
                          } catch (Exception e) {
                              System.err.println("Erro ao carregar médico do arquivo: " + e.getMessage());
+                             LogService.registrar("mensagem");
                              return null;
                          }
                      })

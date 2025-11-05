@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import componentes.Cliente;
 import database.GerenciamentoDatabase;
+import logs.LogService;
 
 public class ClienteRepository implements CrudRepository<Cliente> {
 
@@ -16,6 +17,7 @@ public class ClienteRepository implements CrudRepository<Cliente> {
         clientes = carregarDoArquivo();
     }
 
+    //Método que chama a classe responsável por gerenciar os arquivos txt
     @Override
     public void Salvar(Cliente cliente) {
         clientes.add(cliente);
@@ -45,6 +47,7 @@ public class ClienteRepository implements CrudRepository<Cliente> {
         }
     }
 
+    //responsável por carregar os dados do txt, com base no gerenciamento de database
     private List<Cliente> carregarDoArquivo() {
         List<String> linhas = GerenciamentoDatabase.carregar(ARQUIVO_CLIENTES);
         if (linhas == null) return new ArrayList<>();
@@ -53,6 +56,7 @@ public class ClienteRepository implements CrudRepository<Cliente> {
                 return Cliente.fromString(linha);
             } catch (Exception e) {
                 System.err.println("Erro ao carregar cliente do arquivo: " + e.getMessage());
+                LogService.registrar("mensagem");
                 return null;
             }
         }).filter(c -> c != null).collect(Collectors.toList());

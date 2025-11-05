@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import componentes.Agendamento;
 import database.GerenciamentoDatabase;
+import logs.LogService;
 
 public class HorarioLivreRepository implements CrudRepository<Agendamento> {
 
@@ -16,13 +17,11 @@ public class HorarioLivreRepository implements CrudRepository<Agendamento> {
         horariosLivres = carregarDoArquivo();
     }
 
-    // ✅ usado pela Main para obter todos os horários livres
+    //chama método responsável por carregar os dados do txt
     public List<Agendamento> listarTodos() {
-        // sempre lê do arquivo para refletir estado persistido
         return carregarDoArquivo();
     }
 
-    // ✅ usado pela Main para buscar um horário por id
     public Agendamento buscarPorId(int id) {
         return listarTodos().stream()
                 .filter(h -> h.getId() == id)
@@ -30,6 +29,7 @@ public class HorarioLivreRepository implements CrudRepository<Agendamento> {
                 .orElse(null);
     }
 
+    //Salva dados em uma List que chamará o método responsável pelo salvamento em txt
     @Override
     public void Salvar(Agendamento horario) {
         horariosLivres.add(horario);
@@ -58,7 +58,7 @@ public class HorarioLivreRepository implements CrudRepository<Agendamento> {
         }
     }
 
-    // --- privados (não chame na Main) ---
+    //Método que chama a classe responsável por gerenciar os arquivos txt
     private void persistir() {
         List<String> linhas = horariosLivres.stream()
                 .map(h -> h.toString())
@@ -66,6 +66,7 @@ public class HorarioLivreRepository implements CrudRepository<Agendamento> {
         GerenciamentoDatabase.salvarLista(ARQUIVO_HORARIOS, linhas);
     }
 
+    //responsável por carregar os dados do txt, com base no gerenciamento de database
     private List<Agendamento> carregarDoArquivo() {
         List<String> linhas = GerenciamentoDatabase.carregar(ARQUIVO_HORARIOS);
         if (linhas == null) return new ArrayList<>();
@@ -75,6 +76,7 @@ public class HorarioLivreRepository implements CrudRepository<Agendamento> {
                 out.add(Agendamento.fromString(linha));
             } catch (Exception e) {
                 System.err.println("Erro ao carregar horário: " + e.getMessage());
+                LogService.registrar("mensagem");
             }
         }
         return out;
