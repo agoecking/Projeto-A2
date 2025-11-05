@@ -35,8 +35,8 @@ O sistema oferece um menu interativo com as seguintes operações (implementadas
 
 ## Autores
 
-* Albrecht
-* Joallyfer
+* Albrecht (12955345)
+* Joallyfer (37869337)
 
 ## Diagrama de Classes
 
