@@ -2,6 +2,7 @@ package repository;
 
 import componentes.Agendamento;
 import database.GerenciamentoDatabase;
+import logs.LogService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ public class AgendamentoRepository implements CrudRepository<Agendamento> {
         agendamentos = carregarDoArquivo();
     }
 
+    //Método que chama a classe responsável por gerenciar os arquivos txt
     @Override
     public void Salvar(Agendamento agendamento) {
         agendamentos.add(agendamento);
@@ -52,6 +54,7 @@ public class AgendamentoRepository implements CrudRepository<Agendamento> {
         GerenciamentoDatabase.salvarLista(ARQUIVO_AGENDAMENTOS, linhas);
     }
 
+    //responsável por carregar os dados do txt, com base no gerenciamento de database
     private List<Agendamento> carregarDoArquivo() {
         List<String> linhas = GerenciamentoDatabase.carregar(ARQUIVO_AGENDAMENTOS);
         if (linhas == null) return new ArrayList<>();
@@ -60,6 +63,7 @@ public class AgendamentoRepository implements CrudRepository<Agendamento> {
                 return Agendamento.fromString(linha);
             } catch (Exception e) {
                 System.err.println("Erro ao carregar agendamento do arquivo: " + e.getMessage());
+                LogService.registrar("mensagem");
                 return null;
             }
         }).filter(ag -> ag != null).collect(Collectors.toList());
